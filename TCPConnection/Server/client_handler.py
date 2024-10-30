@@ -67,7 +67,6 @@ class BaseClientHandler(threading.Thread):
         logger.info(f'Client disconnected, job complete')
 
     def sendBytes(self, data: bytes):
-        print("Send to:", self._socket.getsockname(), self._socket.getpeername())
         self._socket.sendall(data)
 
     def send(self, command_id, response):
@@ -92,7 +91,7 @@ class BaseClientHandler(threading.Thread):
                     bytes_data = self.get_prepare_bytes(name, value_format, item)
             elif isinstance(item, str):
                 value_format = 's'  # str
-                bytes_data = self.get_prepare_bytes(name, value_format, item)
+                bytes_data = self.get_prepare_bytes(name, value_format, item, len(item))
             else:
                 raise TypeError(f"Unknown type for item: {type(item)}")
 
@@ -110,13 +109,13 @@ class BaseClientHandler(threading.Thread):
         # Начинаем формировать байты результата
         result = bytearray()
 
-        # Добавляем размер данных
-        result.append(size & 0xFF)
-        result.append((size >> 8) & 0xFF)
-
         # Добавляем размер имени
         result.append(len(name) & 0xFF)
         result.append((len(name) >> 8) & 0xFF)
+
+        # Добавляем размер данных
+        result.append(size & 0xFF)
+        result.append((size >> 8) & 0xFF)
 
         # Добавляем имя
         result.extend(name.encode('utf-8'))
