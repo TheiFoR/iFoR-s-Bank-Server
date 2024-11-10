@@ -1,10 +1,9 @@
-from client_handler import ClientHandler
 from logger import logger
-import settings
-from server import Server
-from TCPConnection.server import Server
 
-server = Server('127.0.0.1', 1310, ClientHandler)
+from tcp_connection.client import Client
+from tcp_connection.server import Server
+
+server = Server('127.0.0.1', 1310, Client)
 
 def main():
     logger.info("Start iFoR's Bank Server program")

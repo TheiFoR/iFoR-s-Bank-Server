@@ -1,7 +1,9 @@
 class client:
-    class enums:
+    class code:
         ok = 0
-        error = 1
+        info = 1
+        warning = 2
+        error = 3
 
     class login:
         id = 0

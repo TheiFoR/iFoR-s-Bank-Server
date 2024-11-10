@@ -1,8 +1,6 @@
 import sys
 
-from TCPConnection.Server.client_handler import BaseClientHandler
-
-sys.path.append('../logger')
+from tcp_connection.client_core import ClientCore
 
 from logger import logger
 import socket
@@ -16,12 +14,12 @@ class Server:
 
     _server_socket = None
 
-    client_handler: BaseClientHandler = None
+    client: ClientCore = None
 
-    def __init__(self, ip, port, client_handler):
+    def __init__(self, ip, port, client):
         self._ip = ip
         self._port = port
-        self.client_handler = client_handler
+        self.client = client
 
     def start(self):
         self._server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -33,7 +31,7 @@ class Server:
             client_socket, client_address = self._server_socket.accept()
             logger.info("New client connections! " + str(client_address))
 
-            client_handler = self.client_handler(client_socket, client_address)
-            client_handler.start()
+            client = self.client(client_socket, client_address)
+            client.start()
 
-            self._client_list.append(client_handler)
+            self._client_list.append(client)

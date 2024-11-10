@@ -2,7 +2,7 @@ import datetime
 import json
 import logging
 import os
-import settings
+from utils import settings
 
 _log_level_map = {
     "debug": logging.DEBUG,
@@ -30,13 +30,13 @@ _time_now_str = datetime.datetime.now().strftime('%d-%m-%Y_%I-%M-%S %p')
 _log_full_path = _log_path + '/log_' + '0' + '.json'
 
 
-try:
-    _log_file = open(_log_full_path, 'x')
-    _log_file.close()
-except:
-    _log_file = open(_log_full_path, 'w')
-    _log_file.write("")
-    _log_file.close()
+# try:
+#     _log_file = open(_log_full_path, 'r+b')
+#     _log_file.close()
+# except:
+#     _log_file = open(_log_full_path, 'w')
+#     _log_file.write("")
+#     _log_file.close()
 
 
 def debug(msg, *args, **kwargs):
@@ -74,5 +74,5 @@ def _write_log(msg: str, level: str):
         log_file.write('\n')
 
 
-if __name__ == 'logger':
+if __name__ == 'logger.logger':
     info("Start a log file at the path: " + _log_full_path)

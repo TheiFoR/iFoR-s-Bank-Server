@@ -6,7 +6,7 @@ from user import User
 
 
 def _load() -> dict:
-    file_path = "database.json"
+    file_path = "../database.json"
 
     try:
         # Check if the file exists; if not, create it
